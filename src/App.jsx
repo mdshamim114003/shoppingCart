@@ -52,8 +52,8 @@ function App() {
     <>
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<Home basket={basket} setBasket={setBasket} shopItemsData={shopItemsData} />}></Route>
-        <Route path='/cart' element={<Cart basket={basket} setBasket={setBasket} shopItemsData={shopItemsData} />}></Route>
+        <Route path='/' element={<Home basket={basket} setBasket={setBasket} shopItemsData={shopItemsData} />} />
+        <Route path='/cart' element={<Cart basket={basket} setBasket={setBasket} shopItemsData={shopItemsData} />} />
       </Routes>
     </BrowserRouter>
     </>

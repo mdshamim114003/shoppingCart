@@ -7,17 +7,16 @@ const Product = ({basket, setBasket, shopItemsData}) => {
   const handleDecrement = (id) => {
     const search = basket.find((item) => item.id === id)
     if(search?.item === 0) return
-    else {
-      setBasket((prevBasket) => 
-        prevBasket.map((basketItem) =>
-          basketItem.id === id ? { ...basketItem, item: basketItem.item - 1 } : basketItem
-        )
+    setBasket((prevBasket) => 
+      prevBasket.map((basketItem) =>
+        basketItem.id === id ? { ...basketItem, item: basketItem.item - 1 } : basketItem
       )
-    }
+    )
 
     // basket.filter(x => x.item !== 0)
-    setBasket((prevBasket) => prevBasket.filter(x => x.item !== 0))
+    // setBasket((prevBasket) => prevBasket.filter(x => x.item !== 0))
   }
+
   const handleIncrement = (id) => {
     const search = basket.find((item) => item.id === id)
     if(search === undefined) {
@@ -28,14 +27,21 @@ const Product = ({basket, setBasket, shopItemsData}) => {
           item: 1
         }
       ])
+      return;
     }
-    else {
-      setBasket((prevBasket) => 
-        prevBasket.map((basketItem) =>
-          basketItem.id === id ? { ...basketItem, item: basketItem.item + 1 } : basketItem
-        )
-      )
-    }
+
+    // setBasket((prevBasket) => 
+    //   prevBasket.map((basketItem) =>
+    //     basketItem.id === id ? { ...basketItem, item: basketItem.item + 1 } : basketItem
+    //   )
+    // )
+
+    setBasket(prevBasket => {
+      const changedItemIndex = prevBasket.findIndex(item => item.id === id)
+      prevBasket[changedItemIndex].item += 1
+    })
+
+
     // localStorage.setItem('data', JSON.stringify(basket))
   }
   function renderBasketCount(id){
@@ -44,7 +50,7 @@ const Product = ({basket, setBasket, shopItemsData}) => {
   }
   return (
     <>
-      {shopItemsData.map((item) => (
+      {shopItemsData.map((item, index) => (
         <div key={item.id} className='w-56 border-2 border-black mb-5 rounded'>
         <img className='w-56' src={item.img} alt="Product Image" />
         <div className='flex flex-col gap-2 px-2 py-3'>
@@ -55,7 +61,7 @@ const Product = ({basket, setBasket, shopItemsData}) => {
             <div className='flex justify-center items-center gap-2'>
               <button onClick={()=> handleDecrement(item.id)}><FontAwesomeIcon icon={faMinus}/></button>
               <p>{renderBasketCount(item.id)}</p>
-              <button onClick={()=> handleIncrement(item.id)}><FontAwesomeIcon icon={faPlus}/></button>
+              <button onClick={()=> handleIncrement(index)}><FontAwesomeIcon icon={faPlus}/></button>
             </div>
           </div>
         </div>
